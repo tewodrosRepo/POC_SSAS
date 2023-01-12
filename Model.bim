@@ -1,0 +1,440 @@
+{
+  "name": "SemanticModel",
+  "compatibilityLevel": 1500,
+  "model": {
+    "defaultMode": "directQuery",
+    "culture": "en-US",
+    "dataSources": [
+      {
+        "type": "structured",
+        "name": "SQL/TEWODROS\\SQL2022;ContosoRetailDW",
+        "connectionDetails": {
+          "protocol": "tds",
+          "address": {
+            "server": "TEWODROS\\SQL2022",
+            "database": "ContosoRetailDW"
+          },
+          "authentication": null,
+          "query": null
+        },
+        "credential": {
+          "AuthenticationKind": "UsernamePassword",
+          "kind": "SQL",
+          "path": "tewodros\\sql2022;ContosoRetailDW",
+          "Username": "ReportUser",
+          "EncryptConnection": false
+        }
+      }
+    ],
+    "tables": [
+      {
+        "name": "Sales",
+        "columns": [
+          {
+            "name": "SalesKey",
+            "dataType": "int64",
+            "sourceColumn": "SalesKey"
+          },
+          {
+            "name": "DateKey",
+            "dataType": "dateTime",
+            "sourceColumn": "DateKey"
+          },
+          {
+            "name": "ProductKey",
+            "dataType": "int64",
+            "sourceColumn": "ProductKey"
+          },
+          {
+            "name": "UnitCost",
+            "dataType": "decimal",
+            "sourceColumn": "UnitCost"
+          },
+          {
+            "name": "UnitPrice",
+            "dataType": "decimal",
+            "sourceColumn": "UnitPrice"
+          },
+          {
+            "name": "SalesQuantity",
+            "dataType": "int64",
+            "sourceColumn": "SalesQuantity"
+          },
+          {
+            "name": "ReturnQuantity",
+            "dataType": "int64",
+            "sourceColumn": "ReturnQuantity"
+          },
+          {
+            "name": "ReturnAmount",
+            "dataType": "decimal",
+            "sourceColumn": "ReturnAmount"
+          },
+          {
+            "name": "DiscountQuantity",
+            "dataType": "int64",
+            "sourceColumn": "DiscountQuantity"
+          },
+          {
+            "name": "DiscountAmount",
+            "dataType": "decimal",
+            "sourceColumn": "DiscountAmount"
+          },
+          {
+            "name": "TotalCost",
+            "dataType": "decimal",
+            "sourceColumn": "TotalCost"
+          },
+          {
+            "name": "SalesAmount",
+            "dataType": "decimal",
+            "sourceColumn": "SalesAmount"
+          }
+        ],
+        "partitions": [
+          {
+            "name": "Partition",
+            "dataView": "full",
+            "source": {
+              "type": "m",
+              "expression": [
+                "let",
+                "    Source = #\"SQL/TEWODROS\\SQL2022;ContosoRetailDW\",",
+                "    dbo_FactSales = Source{[Schema=\"dbo\",Item=\"FactSales\"]}[Data],",
+                "    #\"Removed Other Columns\" = Table.SelectColumns(dbo_FactSales,{\"SalesKey\", \"DateKey\", \"ProductKey\", \"UnitCost\", \"UnitPrice\", \"SalesQuantity\", \"ReturnQuantity\", \"ReturnAmount\", \"DiscountQuantity\", \"DiscountAmount\", \"TotalCost\", \"SalesAmount\"})",
+                "in",
+                "    #\"Removed Other Columns\""
+              ]
+            }
+          }
+        ],
+        "measures": [
+          {
+            "name": "TotalSalesAmount",
+            "expression": "SUM(Sales[SalesAmount])"
+          },
+          {
+            "name": "TotalCostAmount",
+            "expression": "SUM(Sales[TotalCost])"
+          }
+        ]
+      },
+      {
+        "name": "Date",
+        "columns": [
+          {
+            "name": "Datekey",
+            "dataType": "dateTime",
+            "sourceColumn": "Datekey"
+          },
+          {
+            "name": "CalendarYear",
+            "dataType": "int64",
+            "sourceColumn": "CalendarYear"
+          },
+          {
+            "name": "CalendarYearLabel",
+            "dataType": "string",
+            "sourceColumn": "CalendarYearLabel"
+          },
+          {
+            "name": "CalendarQuarter",
+            "dataType": "int64",
+            "sourceColumn": "CalendarQuarter"
+          },
+          {
+            "name": "CalendarQuarterLabel",
+            "dataType": "string",
+            "sourceColumn": "CalendarQuarterLabel"
+          },
+          {
+            "name": "CalendarMonth",
+            "dataType": "int64",
+            "sourceColumn": "CalendarMonth"
+          },
+          {
+            "name": "CalendarMonthLabel",
+            "dataType": "string",
+            "sourceColumn": "CalendarMonthLabel"
+          },
+          {
+            "name": "CalendarWeekLabel",
+            "dataType": "string",
+            "sourceColumn": "CalendarWeekLabel"
+          },
+          {
+            "name": "CalendarDayOfWeek",
+            "dataType": "int64",
+            "sourceColumn": "CalendarDayOfWeek"
+          },
+          {
+            "name": "FiscalYear",
+            "dataType": "int64",
+            "sourceColumn": "FiscalYear"
+          },
+          {
+            "name": "FiscalYearLabel",
+            "dataType": "string",
+            "sourceColumn": "FiscalYearLabel"
+          },
+          {
+            "name": "FiscalQuarter",
+            "dataType": "int64",
+            "sourceColumn": "FiscalQuarter"
+          },
+          {
+            "name": "FiscalQuarterLabel",
+            "dataType": "string",
+            "sourceColumn": "FiscalQuarterLabel"
+          },
+          {
+            "name": "FiscalMonth",
+            "dataType": "int64",
+            "sourceColumn": "FiscalMonth"
+          },
+          {
+            "name": "FiscalMonthLabel",
+            "dataType": "string",
+            "sourceColumn": "FiscalMonthLabel"
+          },
+          {
+            "name": "IsWorkDay",
+            "dataType": "string",
+            "sourceColumn": "IsWorkDay"
+          },
+          {
+            "name": "IsHoliday",
+            "dataType": "int64",
+            "sourceColumn": "IsHoliday"
+          },
+          {
+            "name": "HolidayName",
+            "dataType": "string",
+            "sourceColumn": "HolidayName"
+          }
+        ],
+        "partitions": [
+          {
+            "name": "Partition",
+            "dataView": "full",
+            "source": {
+              "type": "m",
+              "expression": [
+                "let",
+                "    Source = #\"SQL/TEWODROS\\SQL2022;ContosoRetailDW\",",
+                "    dbo_DimDate = Source{[Schema=\"dbo\",Item=\"DimDate\"]}[Data],",
+                "    #\"Removed Other Columns\" = Table.SelectColumns(dbo_DimDate,{\"Datekey\", \"CalendarYear\", \"CalendarYearLabel\", \"CalendarQuarter\", \"CalendarQuarterLabel\", \"CalendarMonth\", \"CalendarMonthLabel\", \"CalendarWeekLabel\", \"CalendarDayOfWeek\", \"FiscalYear\", \"FiscalYearLabel\", \"FiscalQuarter\", \"FiscalQuarterLabel\", \"FiscalMonth\", \"FiscalMonthLabel\", \"IsWorkDay\", \"IsHoliday\", \"HolidayName\"})",
+                "in",
+                "    #\"Removed Other Columns\""
+              ]
+            }
+          }
+        ]
+      },
+      {
+        "name": "Product",
+        "columns": [
+          {
+            "name": "ProductKey",
+            "dataType": "int64",
+            "sourceColumn": "ProductKey"
+          },
+          {
+            "name": "ProductLabel",
+            "dataType": "string",
+            "sourceColumn": "ProductLabel"
+          },
+          {
+            "name": "ProductName",
+            "dataType": "string",
+            "sourceColumn": "ProductName"
+          },
+          {
+            "name": "ProductDescription",
+            "dataType": "string",
+            "sourceColumn": "ProductDescription"
+          },
+          {
+            "name": "ProductSubcategoryKey",
+            "dataType": "int64",
+            "sourceColumn": "ProductSubcategoryKey"
+          },
+          {
+            "name": "Manufacturer",
+            "dataType": "string",
+            "sourceColumn": "Manufacturer"
+          },
+          {
+            "name": "BrandName",
+            "dataType": "string",
+            "sourceColumn": "BrandName"
+          },
+          {
+            "name": "ClassID",
+            "dataType": "string",
+            "sourceColumn": "ClassID"
+          },
+          {
+            "name": "ClassName",
+            "dataType": "string",
+            "sourceColumn": "ClassName"
+          },
+          {
+            "name": "StyleID",
+            "dataType": "string",
+            "sourceColumn": "StyleID"
+          },
+          {
+            "name": "StyleName",
+            "dataType": "string",
+            "sourceColumn": "StyleName"
+          },
+          {
+            "name": "ColorID",
+            "dataType": "string",
+            "sourceColumn": "ColorID"
+          },
+          {
+            "name": "ColorName",
+            "dataType": "string",
+            "sourceColumn": "ColorName"
+          },
+          {
+            "name": "Size",
+            "dataType": "string",
+            "sourceColumn": "Size"
+          },
+          {
+            "name": "SizeRange",
+            "dataType": "string",
+            "sourceColumn": "SizeRange"
+          },
+          {
+            "name": "SizeUnitMeasureID",
+            "dataType": "string",
+            "sourceColumn": "SizeUnitMeasureID"
+          },
+          {
+            "name": "Weight",
+            "dataType": "double",
+            "sourceColumn": "Weight"
+          },
+          {
+            "name": "WeightUnitMeasureID",
+            "dataType": "string",
+            "sourceColumn": "WeightUnitMeasureID"
+          },
+          {
+            "name": "UnitOfMeasureID",
+            "dataType": "string",
+            "sourceColumn": "UnitOfMeasureID"
+          },
+          {
+            "name": "UnitOfMeasureName",
+            "dataType": "string",
+            "sourceColumn": "UnitOfMeasureName"
+          },
+          {
+            "name": "StockTypeID",
+            "dataType": "string",
+            "sourceColumn": "StockTypeID"
+          },
+          {
+            "name": "StockTypeName",
+            "dataType": "string",
+            "sourceColumn": "StockTypeName"
+          },
+          {
+            "name": "UnitCost",
+            "dataType": "decimal",
+            "sourceColumn": "UnitCost"
+          },
+          {
+            "name": "UnitPrice",
+            "dataType": "decimal",
+            "sourceColumn": "UnitPrice"
+          },
+          {
+            "name": "AvailableForSaleDate",
+            "dataType": "dateTime",
+            "sourceColumn": "AvailableForSaleDate"
+          },
+          {
+            "name": "StopSaleDate",
+            "dataType": "dateTime",
+            "sourceColumn": "StopSaleDate"
+          },
+          {
+            "name": "Status",
+            "dataType": "string",
+            "sourceColumn": "Status"
+          },
+          {
+            "name": "ImageURL",
+            "dataType": "string",
+            "sourceColumn": "ImageURL"
+          },
+          {
+            "name": "ProductURL",
+            "dataType": "string",
+            "sourceColumn": "ProductURL"
+          },
+          {
+            "name": "ETLLoadID",
+            "dataType": "int64",
+            "sourceColumn": "ETLLoadID"
+          },
+          {
+            "name": "LoadDate",
+            "dataType": "dateTime",
+            "sourceColumn": "LoadDate"
+          },
+          {
+            "name": "UpdateDate",
+            "dataType": "dateTime",
+            "sourceColumn": "UpdateDate"
+          }
+        ],
+        "partitions": [
+          {
+            "name": "Partition",
+            "dataView": "full",
+            "source": {
+              "type": "m",
+              "expression": [
+                "let",
+                "    Source = #\"SQL/TEWODROS\\SQL2022;ContosoRetailDW\",",
+                "    dbo_DimProduct = Source{[Schema=\"dbo\",Item=\"DimProduct\"]}[Data]",
+                "in",
+                "    dbo_DimProduct"
+              ]
+            }
+          }
+        ]
+      }
+    ],
+    "relationships": [
+      {
+        "name": "698ff139-4a95-495d-9e02-d6dc36d37284",
+        "fromTable": "Sales",
+        "fromColumn": "DateKey",
+        "toTable": "Date",
+        "toColumn": "Datekey"
+      },
+      {
+        "name": "b9bba178-ea03-4e99-9143-af75c1346191",
+        "fromTable": "Sales",
+        "fromColumn": "ProductKey",
+        "toTable": "Product",
+        "toColumn": "ProductKey"
+      }
+    ],
+    "annotations": [
+      {
+        "name": "ClientCompatibilityLevel",
+        "value": "600"
+      }
+    ]
+  },
+  "id": "SemanticModel"
+}
