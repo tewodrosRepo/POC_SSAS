@@ -18,10 +18,10 @@
           "query": null
         },
         "credential": {
-          "AuthenticationKind": "UsernamePassword",
+          "AuthenticationKind": "Windows",
           "kind": "SQL",
           "path": "tewodros\\sql2022;ContosoRetailDW",
-          "Username": "ReportUser",
+          "Username": "Tewodros\\tewod",
           "EncryptConnection": false
         }
       }
