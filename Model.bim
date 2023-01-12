@@ -255,11 +255,6 @@
             "sourceColumn": "ProductDescription"
           },
           {
-            "name": "ProductSubcategoryKey",
-            "dataType": "int64",
-            "sourceColumn": "ProductSubcategoryKey"
-          },
-          {
             "name": "Manufacturer",
             "dataType": "string",
             "sourceColumn": "Manufacturer"
@@ -305,24 +300,9 @@
             "sourceColumn": "Size"
           },
           {
-            "name": "SizeRange",
-            "dataType": "string",
-            "sourceColumn": "SizeRange"
-          },
-          {
-            "name": "SizeUnitMeasureID",
-            "dataType": "string",
-            "sourceColumn": "SizeUnitMeasureID"
-          },
-          {
             "name": "Weight",
             "dataType": "double",
             "sourceColumn": "Weight"
-          },
-          {
-            "name": "WeightUnitMeasureID",
-            "dataType": "string",
-            "sourceColumn": "WeightUnitMeasureID"
           },
           {
             "name": "UnitOfMeasureID",
@@ -333,11 +313,6 @@
             "name": "UnitOfMeasureName",
             "dataType": "string",
             "sourceColumn": "UnitOfMeasureName"
-          },
-          {
-            "name": "StockTypeID",
-            "dataType": "string",
-            "sourceColumn": "StockTypeID"
           },
           {
             "name": "StockTypeName",
@@ -368,31 +343,6 @@
             "name": "Status",
             "dataType": "string",
             "sourceColumn": "Status"
-          },
-          {
-            "name": "ImageURL",
-            "dataType": "string",
-            "sourceColumn": "ImageURL"
-          },
-          {
-            "name": "ProductURL",
-            "dataType": "string",
-            "sourceColumn": "ProductURL"
-          },
-          {
-            "name": "ETLLoadID",
-            "dataType": "int64",
-            "sourceColumn": "ETLLoadID"
-          },
-          {
-            "name": "LoadDate",
-            "dataType": "dateTime",
-            "sourceColumn": "LoadDate"
-          },
-          {
-            "name": "UpdateDate",
-            "dataType": "dateTime",
-            "sourceColumn": "UpdateDate"
           }
         ],
         "partitions": [
@@ -404,9 +354,10 @@
               "expression": [
                 "let",
                 "    Source = #\"SQL/TEWODROS\\SQL2022;ContosoRetailDW\",",
-                "    dbo_DimProduct = Source{[Schema=\"dbo\",Item=\"DimProduct\"]}[Data]",
+                "    dbo_DimProduct = Source{[Schema=\"dbo\",Item=\"DimProduct\"]}[Data],",
+                "    #\"Removed Other Columns\" = Table.SelectColumns(dbo_DimProduct,{\"ProductKey\", \"ProductLabel\", \"ProductName\", \"ProductDescription\", \"Manufacturer\", \"BrandName\", \"ClassID\", \"ClassName\", \"StyleID\", \"StyleName\", \"ColorID\", \"ColorName\", \"Size\", \"Weight\", \"UnitOfMeasureID\", \"UnitOfMeasureName\", \"StockTypeName\", \"UnitCost\", \"UnitPrice\", \"AvailableForSaleDate\", \"StopSaleDate\", \"Status\"})",
                 "in",
-                "    dbo_DimProduct"
+                "    #\"Removed Other Columns\""
               ]
             }
           }
